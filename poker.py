@@ -1,9 +1,15 @@
 import re
+import argparse
 from collections import defaultdict
 
 SUIT = {'S': 'Spades♠', 'H': 'Hearts♡', 'D': 'Diamonds♢', 'C': 'Clovers♣'}
 RANK = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
 CARDS_PER_HAND = 5
+# Initialize argyment parser object
+parser = argparse.ArgumentParser(description="Evaluate a poker hand")
+# Add optional argument
+parser.add_argument('-i',
+                    '--input', help="Input is a poker hand (ex: python poker.py -i D4C4C8D8S4)")
 
 
 class Card:
@@ -46,7 +52,7 @@ class PokerHand:
 
         if errCode != 0:
             errorCode_list = {
-                1: 'A hand must 5 cards',
+                1: 'A hand must be 5 cards',
                 2: 'Card is not valid',
             }
 
@@ -96,8 +102,11 @@ class PokerHand:
 
 
 if __name__ == '__main__':
+    args = parser.parse_args()
 
-    hand = 'S8D3HQS3CQ'
+    hand = args.input or 'S8D3HQS3CQ'
     print(hand)
-    print('----------')
+    print('-----output-----')
     print(PokerHand(hand))
+
+    
